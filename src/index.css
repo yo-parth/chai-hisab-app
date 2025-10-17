@@ -1,0 +1,103 @@
+@import '@fontsource/noto-sans-devanagari/400.css';
+@import '@fontsource/noto-sans-devanagari/600.css';
+@import '@fontsource/noto-sans-devanagari/700.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Chai Khata Design System - Warm, earthy chai colors */
+
+@layer base {
+  :root {
+    /* Chai brown theme */
+    --background: 35 25% 96%;
+    --foreground: 25 40% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 25 40% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 40% 15%;
+
+    /* Primary: Rich chai brown */
+    --primary: 25 45% 35%;
+    --primary-foreground: 35 25% 96%;
+
+    /* Secondary: Warm cream */
+    --secondary: 35 40% 90%;
+    --secondary-foreground: 25 40% 15%;
+
+    /* Muted: Light cream */
+    --muted: 35 30% 92%;
+    --muted-foreground: 25 20% 45%;
+
+    /* Accent: Orange chai spice */
+    --accent: 15 85% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 35 20% 85%;
+    --input: 35 20% 85%;
+    --ring: 25 45% 35%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-chai: linear-gradient(135deg, hsl(25 45% 35%), hsl(15 75% 50%));
+    --gradient-cream: linear-gradient(180deg, hsl(35 40% 95%), hsl(35 30% 92%));
+    
+    /* Shadows */
+    --shadow-soft: 0 2px 8px hsl(25 40% 15% / 0.08);
+    --shadow-card: 0 4px 16px hsl(25 40% 15% / 0.12);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Noto Sans Devanagari', system-ui, sans-serif;
+  }
+
+  /* Large touch targets for mobile */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .gradient-chai {
+    background: var(--gradient-chai);
+  }
+  
+  .gradient-cream {
+    background: var(--gradient-cream);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+}

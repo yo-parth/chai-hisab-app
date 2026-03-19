@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { saveCustomer } from '@/lib/db';
 import { toast } from 'sonner';
+import { useTranslation } from '@/lib/i18n';
 
 interface AddCustomerDialogProps {
   open: boolean;
@@ -14,14 +15,21 @@ interface AddCustomerDialogProps {
 
 export const AddCustomerDialog = ({ open, onOpenChange, onSuccess }: AddCustomerDialogProps) => {
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [pricePerCup, setPricePerCup] = useState('10');
   const [saving, setSaving] = useState(false);
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!name.trim()) {
-      toast.error('कृपया नाम दर्ज करें');
+      toast.error(t('pleaseEnterName'));
+      return;
+    }
+
+    if (phone && !/^\d{10}$/.test(phone)) {
+      toast.error(t('phoneMustBe10'));
       return;
     }
 
@@ -30,18 +38,20 @@ export const AddCustomerDialog = ({ open, onOpenChange, onSuccess }: AddCustomer
       const customer = {
         id: `customer_${Date.now()}`,
         name: name.trim(),
+        phone: phone.trim() || undefined,
         price_per_cup: parseFloat(pricePerCup) || 10,
-        created_at: Date.now()
+        created_at: Date.now(),
       };
 
       await saveCustomer(customer);
-      toast.success('ग्राहक जोड़ा गया');
+      toast.success(t('customerAdded'));
       setName('');
+      setPhone('');
       setPricePerCup('10');
       onOpenChange(false);
       onSuccess();
     } catch (error) {
-      toast.error('कुछ गलत हुआ');
+      toast.error(t('somethingWrong'));
     } finally {
       setSaving(false);
     }
@@ -51,21 +61,33 @@ export const AddCustomerDialog = ({ open, onOpenChange, onSuccess }: AddCustomer
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl">नया ग्राहक जोड़ें</DialogTitle>
+          <DialogTitle className="text-xl">{t('addNewCustomer')}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">नाम *</Label>
+            <Label htmlFor="name">{t('nameLabel')}</Label>
             <Input
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="ग्राहक का नाम"
+              placeholder={t('namePlaceholder')}
               autoFocus
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="price">प्रति कप कीमत (₹)</Label>
+            <Label htmlFor="phone">{t('whatsappLabel')}</Label>
+            <Input
+              id="phone"
+              type="tel"
+              inputMode="numeric"
+              maxLength={10}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+              placeholder={t('phonePlaceholder')}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="price">{t('pricePerCupLabel')}</Label>
             <Input
               id="price"
               type="number"
@@ -80,12 +102,12 @@ export const AddCustomerDialog = ({ open, onOpenChange, onSuccess }: AddCustomer
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1"
+              className="flex-1 bg-white border-border hover:bg-black/5"
             >
-              रद्द करें
+              {t('cancel')}
             </Button>
-            <Button type="submit" disabled={saving} className="flex-1 gradient-chai">
-              {saving ? 'जोड़ रहे हैं...' : 'जोड़ें'}
+            <Button type="submit" disabled={saving} className="flex-1 bg-primary text-white hover:bg-[#68330F]">
+              {saving ? t('adding') : t('add')}
             </Button>
           </div>
         </form>

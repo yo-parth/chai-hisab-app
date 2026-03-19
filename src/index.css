@@ -45,14 +45,6 @@
 
     --radius: 0.75rem;
 
-    /* Gradients */
-    --gradient-chai: linear-gradient(135deg, hsl(25 45% 35%), hsl(15 75% 50%));
-    --gradient-cream: linear-gradient(180deg, hsl(35 40% 95%), hsl(35 30% 92%));
-    
-    /* Shadows */
-    --shadow-soft: 0 2px 8px hsl(25 40% 15% / 0.08);
-    --shadow-card: 0 4px 16px hsl(25 40% 15% / 0.12);
-    
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -81,22 +73,6 @@
 }
 
 @layer utilities {
-  .gradient-chai {
-    background: var(--gradient-chai);
-  }
-  
-  .gradient-cream {
-    background: var(--gradient-cream);
-  }
-  
-  .shadow-soft {
-    box-shadow: var(--shadow-soft);
-  }
-  
-  .shadow-card {
-    box-shadow: var(--shadow-card);
-  }
-  
   .transition-smooth {
     transition: var(--transition-smooth);
   }
